@@ -16,18 +16,25 @@
   "dependencies": {
     "@remix-run/react": "^2.10.1",
     "@remix-run/server-runtime": "^2.10.1",
+    "@sanity/client": "^6.21.2",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/react-loader": "^1.10.6",
+    "@sanity/visual-editing": "^2.1.9",
     "@shopify/hydrogen": "2024.7.3",
     "@shopify/remix-oxygen": "^2.0.6",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "groq": "^3.53.0",
     "isbot": "^3.8.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sanity": "^3.53.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",
     "@remix-run/dev": "^2.10.1",
     "@remix-run/eslint-config": "^2.10.1",
+    "@sanity/types": "^3.53.0",
     "@shopify/cli": "3.65.1",
     "@shopify/hydrogen-codegen": "^0.3.1",
     "@shopify/mini-oxygen": "^3.0.4",

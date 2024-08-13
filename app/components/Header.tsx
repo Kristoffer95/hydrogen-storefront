@@ -25,6 +25,7 @@ export function Header({
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
         <strong>{shop.name}</strong>
       </NavLink>
+
       <HeaderMenu
         menu={menu}
         viewport="desktop"
@@ -93,6 +94,16 @@ export function HeaderMenu({
           </NavLink>
         );
       })}
+
+      <NavLink
+        className="header-menu-item"
+        end
+        onClick={closeAside}
+        prefetch="intent"
+        to="/testing"
+      >
+        Testing
+      </NavLink>
     </nav>
   );
 }

@@ -45,6 +45,9 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
+
+      {/* <pre>{JSON.stringify(header, null, 2)}</pre> */}
+
       <main>{children}</main>
       <Footer
         footer={footer}

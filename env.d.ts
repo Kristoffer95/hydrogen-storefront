@@ -1,3 +1,4 @@
+
 /// <reference types="vite/client" />
 /// <reference types="@shopify/remix-oxygen" />
 /// <reference types="@shopify/oxygen-workers-types" />
@@ -13,13 +14,8 @@ import type {
 import type {createAppLoadContext} from '~/lib/context';
 
 declare global {
-  /**
-   * A global `process` object is only available during build to access NODE_ENV.
-   */
-  const process: {env: {NODE_ENV: 'production' | 'development'}};
-
   interface Env extends HydrogenEnv {
-    // declare additional Env parameter use in the fetch handler and Remix loader context here
+    // declare additional Env parameters used in the fetch handler and Remix loader context here
   }
 }
 
@@ -33,3 +29,20 @@ declare module '@shopify/remix-oxygen' {
     // declare local additions to the Remix session data here
   }
 }
+
+// Accessing the environment variables using Vite's import.meta.env
+const projectId = import.meta.env.VITE_SANITY_STUDIO_PROJECT_ID as string;
+const dataset = import.meta.env.VITE_SANITY_STUDIO_DATASET as string;
+const studioUrl = import.meta.env.VITE_SANITY_STUDIO_URL as string;
+const stegaEnabled = import.meta.env.VITE_SANITY_STUDIO_STEGA_ENABLED === 'true';
+
+if (!projectId || !dataset || !studioUrl) {
+  throw new Error('Missing necessary environment variables in .env');
+}
+
+export const config = {
+  projectId,
+  dataset,
+  studioUrl,
+  stegaEnabled,
+};
