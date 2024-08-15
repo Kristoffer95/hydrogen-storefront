@@ -14,6 +14,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import type {NAVIGATION_QUERYResult} from 'sanity/types';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -21,6 +22,7 @@ interface PageLayoutProps {
   header: HeaderQuery;
   isLoggedIn: Promise<boolean>;
   publicStoreDomain: string;
+  navigation: NAVIGATION_QUERYResult;
   children?: React.ReactNode;
 }
 
@@ -29,6 +31,7 @@ export function PageLayout({
   children = null,
   footer,
   header,
+  navigation,
   isLoggedIn,
   publicStoreDomain,
 }: PageLayoutProps) {
@@ -36,20 +39,25 @@ export function PageLayout({
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <MobileMenuAside
+        navigation={navigation}
+        header={header}
+        publicStoreDomain={publicStoreDomain}
+      />
+      {/* <pre>{JSON.stringify(, null, 2)}</pre> */}
       {header && (
         <Header
+          headerNav={navigation[0]?.header}
           header={header}
           cart={cart}
           isLoggedIn={isLoggedIn}
           publicStoreDomain={publicStoreDomain}
         />
       )}
-
       {/* <pre>{JSON.stringify(header, null, 2)}</pre> */}
-
       <main>{children}</main>
       <Footer
+        navigation={navigation?.[0].footer}
         footer={footer}
         header={header}
         publicStoreDomain={publicStoreDomain}
@@ -155,9 +163,11 @@ function SearchAside() {
 function MobileMenuAside({
   header,
   publicStoreDomain,
+  navigation,
 }: {
   header: PageLayoutProps['header'];
   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
+  navigation: NAVIGATION_QUERYResult;
 }) {
   return (
     header.menu &&
@@ -165,6 +175,7 @@ function MobileMenuAside({
       <Aside type="mobile" heading="MENU">
         <HeaderMenu
           menu={header.menu}
+          headerNav={navigation[0]?.header}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}

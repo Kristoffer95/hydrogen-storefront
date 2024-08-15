@@ -1,11 +1,13 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import type {Navigation, NAVIGATION_QUERYResult} from 'sanity/types';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
   header: HeaderQuery;
   publicStoreDomain: string;
+  navigation: NAVIGATION_QUERYResult[number]['footer'];
 }
 
 export function Footer({

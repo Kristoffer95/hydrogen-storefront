@@ -19,7 +19,7 @@ export default function Testing() {
     <div className="cart">
       <h1>Testing</h1>
 
-      <pre>{JSON.stringify(data.initial, null, 2)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
       {/* <h1>Cart</h1>
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await

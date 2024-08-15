@@ -17,6 +17,9 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {loadQuery} from 'sanity/loader.server';
+import {NAVIGATION_QUERY} from 'sanity/queries';
+import type {Navigation, NAVIGATION_QUERYResult} from 'sanity/types';
 
 export type RootLoader = typeof loader;
 
@@ -86,6 +89,8 @@ export async function loader(args: LoaderFunctionArgs) {
 async function loadCriticalData({context}: LoaderFunctionArgs) {
   const {storefront} = context;
 
+  const navigation: NAVIGATION_QUERYResult = await loadQuery(NAVIGATION_QUERY);
+
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
@@ -98,6 +103,7 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
 
   return {
     header,
+    navigation,
   };
 }
 
@@ -142,13 +148,16 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Links />
       </head>
       <body>
+        {/* <pre>{JSON.stringify(data?.navigation, null, 2)}</pre> */}
         {data ? (
           <Analytics.Provider
             cart={data.cart}
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout {...data}>{children}</PageLayout>
+            <PageLayout {...data} navigation={data.navigation}>
+              {children}
+            </PageLayout>
           </Analytics.Provider>
         ) : (
           children
