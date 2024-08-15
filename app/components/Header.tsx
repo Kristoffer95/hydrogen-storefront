@@ -94,21 +94,19 @@ export function HeaderMenu({
       )}
 
       {headerNav?.link?.map((nav, index) => (
-        <>
-          <NavLink
-            className="header-menu-item"
-            end
-            // eslint-disable-next-line react/no-array-index-key
-            key={`nav-${index}`}
-            onClick={closeAside}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={slugHandler(nav)}
-          >
-            {/* @ts-ignore */}
-            {nav.navLink?.label ?? nav.navLink?.link?.title}
-          </NavLink>
-        </>
+        <NavLink
+          className="header-menu-item"
+          end
+          // eslint-disable-next-line react/no-array-index-key
+          key={`nav-${index}`}
+          onClick={closeAside}
+          prefetch="intent"
+          style={activeLinkStyle}
+          to={slugHandler(nav)}
+        >
+          {/* @ts-ignore */}
+          {nav.navLink?.label ?? nav.navLink?.link?.title}
+        </NavLink>
       ))}
 
       {/* {menu?.items.map((item) => {
