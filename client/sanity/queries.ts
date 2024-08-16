@@ -6,8 +6,9 @@ export const PAGES_QUERY = groq`*[_type == "page"]{
   title,
   slug,
   body
-}
-`;
+  }
+  `;
+export const PAGE_QUERY = groq`*[_type == "page" && slug.current == $page][0]`;
 
 export const NAVIGATION_QUERY = groq`*[_type == "navigation"] {
   header {

@@ -1,4 +1,5 @@
 {
-  "path": "queries.ts",
-  "schema": "schema.json"
+  "path": "../client/sanity/queries.ts",
+  "schema": "schema.json",
+  "generates": "../client/sanity/types.ts"
 }

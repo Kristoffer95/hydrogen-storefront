@@ -13,6 +13,8 @@
  */
 
 // Source: schema.json
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch';
   background?: string;
@@ -1051,8 +1053,7 @@ export type AllSanitySchemaTypes =
   | RgbaColor
   | HsvaColor
   | HslaColor;
-export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ../client/sanity/queries.ts
+// Source: queries.ts
 // Variable: POSTS_QUERY
 // Query: *[_type == "post" && defined(slug.current)] | order(publishedAt desc)
 export type POSTS_QUERYResult = Array<never>;

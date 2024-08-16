@@ -1,11 +1,11 @@
 import {useLoaderData} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {loadQuery} from 'sanity/loader.server';
-import {PAGES_QUERY} from 'sanity/queries';
+import {PAGE_QUERY} from 'sanity/queries';
 import type {Page} from 'sanity/types';
 
 export async function loader({request, params}: LoaderFunctionArgs) {
-  // const initial: Page[] = await loadQuery(PAGES_QUERY);
+  const initial: Page[] = await loadQuery(PAGE_QUERY, params);
 
   // const url = new URL(request.url);
   // const pathname = url.pathname;
@@ -20,18 +20,20 @@ export async function loader({request, params}: LoaderFunctionArgs) {
 
   return {
     params,
+    initial,
   };
 }
 
-export default function CatchAllPage() {
+export default function Pages() {
   // const {pathname, initial} = useLoaderData<typeof loader>();
-  const {params} = useLoaderData<typeof loader>();
+  const {params, initial} = useLoaderData<typeof loader>();
 
   return (
     <div>
       <h1>Dynamic page</h1>
 
       <pre>{JSON.stringify(params, null, 2)}</pre>
+      <pre>{JSON.stringify(initial, null, 2)}</pre>
 
       {/* <h1>Dynamic Page: {pathname}</h1>
       <p>This is a dynamically rendered page for the path: {pathname}</p>
