@@ -6,10 +6,8 @@ export default ({value}: {value: Images}) => {
   const images = sanityImages(value);
 
   return (
-    <div>
-      <h1>This is the hero section</h1>
-
-      {/* <pre>{JSON.stringify(images, null, 2)}</pre> */}
+    <div className="container">
+      <h1>This is Images Block</h1>
 
       {images && images?.length > 0 ? (
         images?.map((image, index) => (

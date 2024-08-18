@@ -4,3 +4,52 @@
  */
 
 @import 'tailwindcss';
+
+
+/* @theme {
+  --color-coffee-50: #f3f1ed;
+  --color-coffee-100: #e5ded0;
+  --color-coffee-200: #cfc5ab;
+  --color-coffee-300: #a69b7c;
+  --color-coffee-400: #756d50;
+  --color-coffee-500: #4f4837;
+  --color-coffee-600: #3b362a;
+  --color-coffee-700: #29241f;
+  --color-coffee-800: #1b1714;
+  --color-coffee-900: #0f0d0b;
+} */
+
+
+@theme {
+  
+  /* --container-padding: 1rem;
+  --container-sm: 100%;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1320px; */
+  --breakpoint-sm: 100%;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1440px;
+  
+  /* colors */
+  --color-coffee-dark: #0d1110;
+  --color-coffee-dark-brown: #43241a;
+  --color-coffee-brown: #8c5c43;
+  --color-coffee-taupe: #93806e;
+  --color-coffee-light: #d0cec1;
+}
+
+
+.container {
+  @apply w-screen px-[1rem] 
+  md:w-full
+  md:max-w-[calc(var(--breakpoint-md)_-_1rem)]
+  lg:max-w-[calc(var(--breakpoint-lg)_-_1rem)] 
+  xl:max-w-[calc(var(--breakpoint-xl)_-_2rem)] 
+  2xl:max-w-[calc(var(--breakpoint-2xl)_-_2rem)]  
+  xl:px-[2rem]
+  mx-auto; 
+}

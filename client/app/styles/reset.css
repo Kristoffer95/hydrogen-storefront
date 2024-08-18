@@ -13,6 +13,7 @@ body {
     sans-serif;
   margin: 0;
   padding: 0;
+  color: var(--color-coffee-brown);
 }
 
 h1,
@@ -23,10 +24,10 @@ p {
 }
 
 h1 {
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   font-weight: 700;
   line-height: 1.4;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   margin-top: 2rem;
 }
 
@@ -58,7 +59,7 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
   cursor: pointer;
 }
 

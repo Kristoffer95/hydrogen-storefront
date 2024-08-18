@@ -147,7 +147,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-coffee-dark">
         {/* <pre>{JSON.stringify(data?.navigation, null, 2)}</pre> */}
         {data ? (
           <Analytics.Provider

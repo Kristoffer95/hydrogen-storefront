@@ -24,27 +24,33 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
+    <header className="sticky top-0 bg-white/20 backdrop-blur-lg z-10">
+      <div className="container header">
+        <NavLink
+          prefetch="intent"
+          to="/"
+          style={activeLinkStyle}
+          end
+          className={'!text-coffee-light text-sm  uppercase tracking-wide'}
+        >
+          <strong>{shop.name}</strong>
+        </NavLink>
 
-      {/* <pre>{JSON.stringify(headerNav, null, 2)}</pre> */}
-
-      <HeaderMenu
-        menu={header.menu}
-        headerNav={headerNav}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      {/* <HeaderMenu
+        <HeaderMenu
+          menu={header.menu}
+          headerNav={headerNav}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+        {/* <HeaderMenu
         menu={menu}
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
       /> */}
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
     </header>
   );
 }
@@ -62,8 +68,6 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
-
   function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
     if (viewport === 'mobile') {
       event.preventDefault();
@@ -80,7 +84,7 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
+    <nav className="pl-6 flex gap-6" role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
@@ -95,7 +99,7 @@ export function HeaderMenu({
 
       {headerNav?.link?.map((nav, index) => (
         <NavLink
-          className="header-menu-item"
+          className="!text-coffee-light text-sm hover:!opacity-100 transition-all duration-300 uppercase tracking-wide"
           end
           // eslint-disable-next-line react/no-array-index-key
           key={`nav-${index}`}
@@ -109,40 +113,15 @@ export function HeaderMenu({
         </NavLink>
       ))}
 
-      {/* {menu?.items.map((item) => {
-        if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <NavLink
-            className="header-menu-item"
-            end
-            key={item.id}
-            onClick={closeAside}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })} */}
-
-      <NavLink
-        className="header-menu-item"
+      {/* <NavLink
+        className="header-menu-item !text-coffee-dark-brown"
         end
         onClick={closeAside}
         prefetch="intent"
         to="/testing"
       >
         Testing
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 }
@@ -154,7 +133,12 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+      <NavLink
+        prefetch="intent"
+        to="/account"
+        style={activeLinkStyle}
+        className={'!text-coffee-light'}
+      >
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
@@ -182,7 +166,10 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
+    <button
+      className="reset !text-coffee-light !text-sm uppercase tracking-wide"
+      onClick={() => open('search')}
+    >
       Search
     </button>
   );
@@ -195,6 +182,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
+      className="!text-coffee-light !text-sm uppercase tracking-wide"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -224,48 +212,6 @@ function CartToggle({cart}: Pick<HeaderProps, 'cart'>) {
   );
 }
 
-// const FALLBACK_HEADER_MENU = {
-//   id: 'gid://shopify/Menu/199655587896',
-//   items: [
-//     {
-//       id: 'gid://shopify/MenuItem/461609500728',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Collections',
-//       type: 'HTTP',
-//       url: '/collections',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609533496',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Blog',
-//       type: 'HTTP',
-//       url: '/blogs/journal',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609566264',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Policies',
-//       type: 'HTTP',
-//       url: '/policies',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609599032',
-//       resourceId: 'gid://shopify/Page/92591030328',
-//       tags: [],
-//       title: 'About',
-//       type: 'PAGE',
-//       url: '/pages/about',
-//       items: [],
-//     },
-//   ],
-// };
-
 function activeLinkStyle({
   isActive,
   isPending,
@@ -274,7 +220,7 @@ function activeLinkStyle({
   isPending: boolean;
 }) {
   return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    // textDecoration: isActive ? 'underline' : undefined,
+    opacity: isActive ? 1 : 0.5,
   };
 }

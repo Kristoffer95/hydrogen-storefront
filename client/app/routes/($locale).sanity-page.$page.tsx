@@ -19,10 +19,5 @@ export default function Pages() {
   // const {pathname, initial} = useLoaderData<typeof loader>();
   const {params, initial} = useLoaderData<typeof loader>();
 
-  return (
-    <div>
-      <h1>Dynamic page</h1>
-      <PortableText value={initial.body!} components={components} />
-    </div>
-  );
+  return <PortableText value={initial.body!} components={components} />;
 }

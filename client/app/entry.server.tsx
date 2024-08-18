@@ -18,8 +18,18 @@ export default async function handleRequest(
     },
   });
 
-  // Manually append img-src to the existing CSP header
-  const updatedCspHeader = `${header}; img-src 'self' https://cdn.sanity.io`;
+  // Parse the existing CSP header
+  let updatedCspHeader = header;
+
+  // Check if 'img-src' is already defined, and append or create it
+  if (updatedCspHeader.includes('img-src')) {
+    updatedCspHeader = updatedCspHeader.replace(
+      /img-src[^;]*/,
+      (match) => `${match} https://cdn.shopify.com https://cdn.sanity.io`,
+    );
+  } else {
+    updatedCspHeader += `; img-src 'self' https://cdn.shopify.com https://cdn.sanity.io`;
+  }
 
   const body = await renderToReadableStream(
     <NonceProvider>
@@ -40,7 +50,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  responseHeaders.set('Content-Security-Policy', updatedCspHeader); // Use the updated CSP header
+  responseHeaders.set('Content-Security-Policy', updatedCspHeader); // Set the updated CSP header
 
   return new Response(body, {
     headers: responseHeaders,
