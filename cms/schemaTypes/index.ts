@@ -43,6 +43,9 @@ import {shopifyProductType} from './objects/shopify/shopifyProductType'
 import {shopifyProductVariantType} from './objects/shopify/shopifyProductVariantType'
 import {spotType} from './objects/hotspot/spotType'
 
+// custom-blocks
+import {heroSectionType} from './objects/module/custom-blocks/heroSection'
+
 // Objects used as annotations must be imported first
 const annotations = [linkEmailType, linkExternalType, linkInternalType, linkProductType]
 
@@ -87,6 +90,9 @@ const objects = [
   shopifyProductType,
   shopifyProductVariantType,
   spotType,
+
+  // custom-blocks
+  heroSectionType,
 ]
 
 import {portableTextType} from './portableText/portableTextType'
@@ -104,7 +110,7 @@ const documents = [collectionType, colorThemeType, pageType, productType, produc
 
 import {homeType} from './singletons/homeType'
 import {settingsType} from './singletons/settingsType'
-import { navigationType } from './singletons/navigationType'
+import {navigationType} from './singletons/navigationType'
 
 const singletons = [homeType, settingsType, navigationType]
 

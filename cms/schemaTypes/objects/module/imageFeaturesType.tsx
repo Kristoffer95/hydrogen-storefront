@@ -13,7 +13,7 @@ export const imageFeaturesType = defineField({
       title: 'Images',
       type: 'array',
       of: [{type: 'imageFeature'}],
-      validation: (Rule) => Rule.required().max(2),
+      validation: (Rule) => Rule.required().max(6),
     }),
     defineField({
       name: 'fullWidth',

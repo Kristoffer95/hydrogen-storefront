@@ -145,6 +145,12 @@ export type PortableText = Array<
   | ({
       _key: string;
     } & Products)
+  | ({
+      _key: string;
+    } & Hero)
+  | ({
+      _key: string;
+    } & HeroSection)
 >;
 
 export type Navigation = {
@@ -175,6 +181,22 @@ export type Settings = {
   >;
   notFoundPage?: NotFoundPage;
   seo?: Seo;
+};
+
+export type HeroSection = {
+  _type: 'heroSection';
+  imageFeatures?: Array<{
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+    _key: string;
+  }>;
 };
 
 export type Spot = {
@@ -990,6 +1012,7 @@ export type AllSanitySchemaTypes =
   | PortableText
   | Navigation
   | Settings
+  | HeroSection
   | Spot
   | ProxyString
   | ProductVariant
@@ -1060,12 +1083,33 @@ export type POSTS_QUERYResult = Array<never>;
 // Query: *[_type == "post" && slug.current == $slug][0]
 export type POST_QUERYResult = null;
 // Variable: PAGES_QUERY
-// Query: *[_type == "page"]{  title,  slug,  body}
+// Query: *[_type == "page"]{  title,  slug,  body  }  
 export type PAGES_QUERYResult = Array<{
   title: string | null;
   slug: Slug | null;
   body: PortableText | null;
 }>;
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $page][0]
+export type PAGE_QUERYResult = {
+  _id: string;
+  _type: 'page';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  colorTheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorTheme';
+  };
+  showHero?: boolean;
+  hero?: Hero;
+  body?: PortableText;
+  seo?: Seo;
+} | null;
 // Variable: NAVIGATION_QUERY
 // Query: *[_type == "navigation"] {  header {    link[] {      navLink{        label,        "link": *[(_type == "product" || _type == "page" || _type == "collection") && _id == ^.linkInternal.reference._ref][0],      },      subNavigation[] {        label,        linkInternal,        "link": *[(_type == "product" || _type == "page" || _type == "collection") && _id == ^.linkInternal.reference._ref][0],      },    }  },  footer {    link[] {      navLink{        label,        "link": *[(_type == "product" || _type == "page" || _type == "collection") && _id == ^.linkInternal.reference._ref][0],      },      subNavigation[] {        label,        linkInternal,        "link": *[(_type == "product" || _type == "page" || _type == "collection") && _id == ^.linkInternal.reference._ref][0],      },    }  }}
 export type NAVIGATION_QUERYResult = Array<{

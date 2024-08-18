@@ -18,6 +18,9 @@ export default async function handleRequest(
     },
   });
 
+  // Manually append img-src to the existing CSP header
+  const updatedCspHeader = `${header}; img-src 'self' https://cdn.sanity.io`;
+
   const body = await renderToReadableStream(
     <NonceProvider>
       <RemixServer context={remixContext} url={request.url} />
@@ -26,7 +29,6 @@ export default async function handleRequest(
       nonce,
       signal: request.signal,
       onError(error) {
-        // eslint-disable-next-line no-console
         console.error(error);
         responseStatusCode = 500;
       },
@@ -38,7 +40,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  responseHeaders.set('Content-Security-Policy', header);
+  responseHeaders.set('Content-Security-Policy', updatedCspHeader); // Use the updated CSP header
 
   return new Response(body, {
     headers: responseHeaders,

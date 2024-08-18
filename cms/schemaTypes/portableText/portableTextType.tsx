@@ -48,5 +48,9 @@ export const portableTextType = defineField({
     defineArrayMember({type: 'imageWithProductHotspots', title: 'Image with Hotspots'}),
     defineArrayMember({type: 'instagram'}),
     defineArrayMember({type: 'products'}),
+    defineArrayMember({type: 'hero'}),
+
+    // custom-blocks
+    defineArrayMember({type: 'heroSection'}),
   ],
 })
