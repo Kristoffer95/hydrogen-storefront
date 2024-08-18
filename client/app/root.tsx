@@ -20,6 +20,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {loadQuery} from 'sanity/loader.server';
 import {NAVIGATION_QUERY} from 'sanity/queries';
 import type {Navigation, NAVIGATION_QUERYResult} from 'sanity/types';
+import {FEATURED_PRODUCTS_QUERY} from './graphql/products/Products';
 
 export type RootLoader = typeof loader;
 
@@ -91,6 +92,17 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
 
   const navigation: NAVIGATION_QUERYResult = await loadQuery(NAVIGATION_QUERY);
 
+  // const [header, featuredProducts] = await Promise.all([
+  //   storefront.query(HEADER_QUERY, {
+  //     cache: storefront.CacheLong(),
+  //     variables: {
+  //       headerMenuHandle: 'main-menu', // Adjust to your header menu handle
+  //     },
+  //   }),
+  //   // Add other queries here, so that they are loaded in parallel
+  //   storefront.query(FEATURED_PRODUCTS_QUERY),
+  // ]);
+
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
@@ -99,11 +111,13 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
       },
     }),
     // Add other queries here, so that they are loaded in parallel
+    // storefront.query(FEATURED_PRODUCTS_QUERY),
   ]);
 
   return {
     header,
     navigation,
+    // featuredProducts,
   };
 }
 
@@ -128,10 +142,23 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       console.error(error);
       return null;
     });
+
+  // defer the footer query (below the fold)
+  const featuredProducts = storefront
+    .query(FEATURED_PRODUCTS_QUERY, {
+      cache: storefront.CacheLong(),
+    })
+    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
+
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
     footer,
+    featuredProducts,
   };
 }
 

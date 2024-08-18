@@ -45,6 +45,7 @@ import {spotType} from './objects/hotspot/spotType'
 
 // custom-blocks
 import {heroSectionType} from './objects/module/custom-blocks/heroSection'
+import {featuredProductsType} from './objects/module/custom-blocks/featuedProducts'
 
 // Objects used as annotations must be imported first
 const annotations = [linkEmailType, linkExternalType, linkInternalType, linkProductType]
@@ -93,6 +94,7 @@ const objects = [
 
   // custom-blocks
   heroSectionType,
+  featuredProductsType,
 ]
 
 import {portableTextType} from './portableText/portableTextType'

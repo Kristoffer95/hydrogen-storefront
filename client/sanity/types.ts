@@ -126,6 +126,12 @@ export type PortableText = Array<
     }
   | ({
       _key: string;
+    } & HeroSection)
+  | ({
+      _key: string;
+    } & FeaturedProducts)
+  | ({
+      _key: string;
     } & Accordion)
   | ({
       _key: string;
@@ -144,13 +150,7 @@ export type PortableText = Array<
     } & Instagram)
   | ({
       _key: string;
-    } & Products)
-  | ({
-      _key: string;
     } & Hero)
-  | ({
-      _key: string;
-    } & HeroSection)
 >;
 
 export type Navigation = {
@@ -181,6 +181,16 @@ export type Settings = {
   >;
   notFoundPage?: NotFoundPage;
   seo?: Seo;
+};
+
+export type FeaturedProducts = {
+  _type: 'featuredProducts';
+  products?: Array<
+    {
+      _key: string;
+    } & ProductReference
+  >;
+  layout?: 'card' | 'pill';
 };
 
 export type HeroSection = {
@@ -1012,6 +1022,7 @@ export type AllSanitySchemaTypes =
   | PortableText
   | Navigation
   | Settings
+  | FeaturedProducts
   | HeroSection
   | Spot
   | ProxyString
@@ -1139,4 +1150,25 @@ export type NAVIGATION_QUERYResult = Array<{
       }> | null;
     }> | null;
   } | null;
+}>;
+// Variable: FEATURED_PRODUCTS_QUERY
+// Query: *[_type == "product" && _id in $ids]
+export type FEATURED_PRODUCTS_QUERYResult = Array<{
+  _id: string;
+  _type: 'product';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hidden?: string;
+  titleProxy?: ProxyString;
+  slugProxy?: ProxyString;
+  colorTheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorTheme';
+  };
+  body?: PortableText;
+  store?: ShopifyProduct;
+  seo?: Seo;
 }>;
