@@ -29,7 +29,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   const cartHasItems = cart?.totalQuantity! > 0;
 
   return (
-    <div className={className}>
+    <div className={`${className} `}>
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
         <div aria-labelledby="cart-lines">

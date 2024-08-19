@@ -24,7 +24,7 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="sticky top-0 bg-white/20 backdrop-blur-lg z-50">
+    <header className="sticky top-0 bg-white/20 backdrop-blur-lg z-30">
       <div className="container header">
         <NavLink
           prefetch="intent"

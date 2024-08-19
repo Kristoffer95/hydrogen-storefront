@@ -20,13 +20,7 @@ export default ({value}: {value: HeroSection}) => {
           </h3>
         </div>
 
-        <NavLink
-          prefetch="intent"
-          to="/collections/all"
-          end
-          className="px-36 py-3 bg-coffee-brown hover:bg-coffee-dark !text-white font-thin
-          tracking-widest capitalize rounded-sm transition-all duration-300"
-        >
+        <NavLink prefetch="intent" to="/collections/all" end className="btn">
           Shop now
         </NavLink>
       </div>

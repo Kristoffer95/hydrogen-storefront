@@ -53,3 +53,8 @@
   xl:px-[2rem]
   mx-auto; 
 }
+
+.btn {
+  @apply px-36 py-3 bg-coffee-brown hover:bg-coffee-dark !text-white font-thin
+  tracking-widest capitalize rounded-sm transition-all duration-300;
+}

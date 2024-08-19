@@ -31,6 +31,16 @@ export default async function handleRequest(
     updatedCspHeader += `; img-src 'self' https://cdn.shopify.com https://cdn.sanity.io`;
   }
 
+  // Add font-src directive to allow fonts from data: URLs
+  if (updatedCspHeader.includes('font-src')) {
+    updatedCspHeader = updatedCspHeader.replace(
+      /font-src[^;]*/,
+      (match) => `${match} 'self' data:`,
+    );
+  } else {
+    updatedCspHeader += `; font-src 'self' data:`;
+  }
+
   const body = await renderToReadableStream(
     <NonceProvider>
       <RemixServer context={remixContext} url={request.url} />

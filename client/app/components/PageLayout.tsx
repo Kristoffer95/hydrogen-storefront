@@ -44,7 +44,6 @@ export function PageLayout({
         header={header}
         publicStoreDomain={publicStoreDomain}
       />
-      {/* <pre>{JSON.stringify(, null, 2)}</pre> */}
       {header && (
         <Header
           headerNav={navigation[0]?.header}
@@ -54,7 +53,6 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      {/* <pre>{JSON.stringify(header, null, 2)}</pre> */}
       <main>{children}</main>
       <Footer
         navigation={navigation?.[0].footer}

@@ -484,3 +484,12 @@ button.reset:hover:not(:has(> *)) {
   display: inline-block;
 }
 
+
+.swiper  {
+  overflow: unset !important;
+  /* overflow: unset; */
+  
+  .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -40px;
+  }
+}

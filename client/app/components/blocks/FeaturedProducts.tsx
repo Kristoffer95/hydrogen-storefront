@@ -8,17 +8,17 @@ export default ({value}: {value: FeaturedProducts}) => {
   const data = useRouteLoaderData<RootLoader>('root');
 
   return (
-    <div className="featured-products">
-      <h3>From featured products query</h3>
+    <div className="featured-products py-10">
+      <div className="container">
+        <h2>Featured Products</h2>
+      </div>
 
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
       <Suspense>
         <Await resolve={data?.featuredProducts}>
           {(featuredProduct) => (
-            <div className="border">
-              <ProductCards featuredProducts={featuredProduct} />
-            </div>
+            <ProductCards featuredProducts={featuredProduct} />
           )}
         </Await>
       </Suspense>
