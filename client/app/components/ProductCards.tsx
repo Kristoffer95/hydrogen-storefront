@@ -11,10 +11,20 @@ import {NavLink} from '@remix-run/react';
 import type {
   Collection,
   ProductEdge,
+  // ProductEdge,
   QueryRootCollectionsArgs,
 } from '@shopify/hydrogen/storefront-api-types';
 
-export default ({featuredProducts}: {featuredProducts: Collection}) => {
+import type {
+  FeaturedProductsQuery,
+  ProductFieldsFragment,
+} from 'storefrontapi.generated';
+
+export default ({
+  featuredProducts,
+}: {
+  featuredProducts: FeaturedProductsQuery['collection'];
+}) => {
   return (
     <div className="container pb-10 overflow-hidden">
       <Swiper
@@ -42,7 +52,7 @@ export default ({featuredProducts}: {featuredProducts: Collection}) => {
         {featuredProducts &&
           featuredProducts.products.edges.map((product) => (
             <SwiperSlide key={product.node.id}>
-              <ProductCard product={product} />
+              <ProductCard product={product.node} />
             </SwiperSlide>
           ))}
       </Swiper>
@@ -50,19 +60,19 @@ export default ({featuredProducts}: {featuredProducts: Collection}) => {
   );
 };
 
-export const ProductCard = ({product}: {product: ProductEdge}) => {
+export const ProductCard = ({product}: {product: ProductFieldsFragment}) => {
   return (
-    <div className="group">
+    <div className="group max-w-[500px]">
       <div className="relative overflow-hidden">
         <img
           className="group-hover:scale-125 transition-all duration-[350ms] delay-100 grayscale-50 group-hover:grayscale-0"
-          src={product?.node?.featuredImage?.url}
-          alt={product?.node?.title}
+          src={product?.featuredImage?.url}
+          alt={product?.title}
         />
 
         <NavLink
           prefetch="intent"
-          to={`/products/${product.node.handle}`}
+          to={`/products/${product.handle}`}
           end
           className="btn !px-10 absolute bottom-0 left-0 right-0 text-center"
         >
@@ -72,11 +82,14 @@ export const ProductCard = ({product}: {product: ProductEdge}) => {
 
       <div>
         <div className="flex justify-between py-5">
-          <h3 className="text-xl font-light">{product.node.title}</h3>
-          <p>₱{product.node.priceRange.minVariantPrice.amount}</p>
+          <h3 className="text-xl font-light">{product.title}</h3>
+          <p>
+            {product.priceRange.minVariantPrice.currencyCode}
+            {product.priceRange.minVariantPrice.amount}
+          </p>
         </div>
 
-        {/* <p>{product.node.description}</p> */}
+        <p>{product.description}</p>
       </div>
     </div>
   );
