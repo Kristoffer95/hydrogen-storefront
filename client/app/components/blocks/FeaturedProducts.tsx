@@ -13,12 +13,10 @@ export default ({value}: {value: FeaturedProducts}) => {
         <h2>Featured Products</h2>
       </div>
 
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-
       <Suspense>
         <Await resolve={data?.featuredProducts}>
           {(featuredProduct) => (
-            <ProductCards featuredProducts={featuredProduct} />
+            <ProductCards featuredProducts={featuredProduct.collection} />
           )}
         </Await>
       </Suspense>

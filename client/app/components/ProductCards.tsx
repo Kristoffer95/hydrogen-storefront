@@ -8,8 +8,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 // import 'swiper/css/scrollbar';
 import {NavLink} from '@remix-run/react';
+import type {
+  Collection,
+  ProductEdge,
+  QueryRootCollectionsArgs,
+} from '@shopify/hydrogen/storefront-api-types';
 
-export default ({featuredProducts}: {featuredProducts: any}) => {
+export default ({featuredProducts}: {featuredProducts: Collection}) => {
   return (
     <div className="container pb-10 overflow-hidden">
       <Swiper
@@ -35,7 +40,7 @@ export default ({featuredProducts}: {featuredProducts: any}) => {
         onSlideChange={() => console.log('slide change')}
       >
         {featuredProducts &&
-          featuredProducts.collection.products.edges.map((product: any) => (
+          featuredProducts.products.edges.map((product) => (
             <SwiperSlide key={product.node.id}>
               <ProductCard product={product} />
             </SwiperSlide>
@@ -45,23 +50,34 @@ export default ({featuredProducts}: {featuredProducts: any}) => {
   );
 };
 
-const ProductCard = ({product}: {product: any}) => {
+export const ProductCard = ({product}: {product: ProductEdge}) => {
   return (
-    <div className="relative group overflow-hidden">
-      <img
-        className="group-hover:scale-125 transition-all duration-[350ms] delay-100 grayscale-50 group-hover:grayscale-0"
-        src={product?.node?.featuredImage?.url}
-        alt={product?.node?.title}
-      />
+    <div className="group">
+      <div className="relative overflow-hidden">
+        <img
+          className="group-hover:scale-125 transition-all duration-[350ms] delay-100 grayscale-50 group-hover:grayscale-0"
+          src={product?.node?.featuredImage?.url}
+          alt={product?.node?.title}
+        />
 
-      <NavLink
-        prefetch="intent"
-        to={`/products/${product.node.handle}`}
-        end
-        className="btn !px-10 absolute bottom-0 left-0 right-0 text-center"
-      >
-        Shop now
-      </NavLink>
+        <NavLink
+          prefetch="intent"
+          to={`/products/${product.node.handle}`}
+          end
+          className="btn !px-10 absolute bottom-0 left-0 right-0 text-center"
+        >
+          Shop now
+        </NavLink>
+      </div>
+
+      <div>
+        <div className="flex justify-between py-5">
+          <h3 className="text-xl font-light">{product.node.title}</h3>
+          <p>₱{product.node.priceRange.minVariantPrice.amount}</p>
+        </div>
+
+        {/* <p>{product.node.description}</p> */}
+      </div>
     </div>
   );
 };

@@ -21,6 +21,7 @@ import {loadQuery} from 'sanity/loader.server';
 import {NAVIGATION_QUERY} from 'sanity/queries';
 import type {Navigation, NAVIGATION_QUERYResult} from 'sanity/types';
 import {FEATURED_PRODUCTS_QUERY} from './graphql/products/Products';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 
 export type RootLoader = typeof loader;
 

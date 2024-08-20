@@ -27,7 +27,7 @@ export default ({value}: {value: HeroSection}) => {
 
       {imageUrl && (
         <div
-          className="max-w-screen h-[900px] brightness-[0.9] contrast-125 "
+          className="max-w-screen h-[45rem] brightness-[0.9] contrast-125 "
           style={{
             backgroundImage: `url(${imageUrl})`,
             backgroundSize: 'cover',
