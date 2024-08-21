@@ -4,8 +4,8 @@ import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductCard} from '~/components/ProductCards';
-import {PRODUCT_FRAGMENT} from '~/graphql/products/Products';
 import type {CatalogQuery} from 'storefrontapi.generated';
+import {PRODUCT_FRAGMENT} from '~/graphql/products/Products';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];

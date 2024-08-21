@@ -4,14 +4,16 @@ import type {
   Hero,
   HeroSection,
   FeaturedProducts,
+  ImageContent,
 } from 'sanity/types';
 import sanityImages from '~/utils/sanityImages';
 
 import HeroBlock from './hero';
 import CalloutBlock from './callout';
 import HeroSectionBlock from './HeroSectionBlock';
-import ImagesBlock from './images';
+import ImagesBlock from './Images';
 import FeaturedProductsBlock from './FeaturedProducts';
+import ImageContentBlock from './ImageContent';
 
 export const components = {
   types: {
@@ -29,6 +31,9 @@ export const components = {
     },
     featuredProducts: ({value}: {value: FeaturedProducts}) => {
       return <FeaturedProductsBlock value={value} />;
+    },
+    imageContent: ({value}: {value: ImageContent}) => {
+      return <ImageContentBlock value={value} />;
     },
   },
 };

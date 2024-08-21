@@ -44,6 +44,7 @@ export const portableTextType = defineField({
     // custom-blocks
     defineArrayMember({type: 'heroSection'}),
     defineArrayMember({type: 'featuredProducts'}),
+    defineArrayMember({type: 'imageContent'}),
 
     // default blocks
     defineArrayMember({type: 'accordion'}),
