@@ -338,6 +338,49 @@ export type CatalogQuery = {
   };
 };
 
+export type CollectionsQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type CollectionsQuery = {
+  collection?: StorefrontAPI.Maybe<
+    Pick<
+      StorefrontAPI.Collection,
+      | 'description'
+      | 'id'
+      | 'handle'
+      | 'title'
+      | 'trackingParameters'
+      | 'updatedAt'
+    > & {
+      products: {
+        edges: Array<{
+          node: Pick<
+            StorefrontAPI.Product,
+            'id' | 'handle' | 'createdAt' | 'description' | 'title' | 'tags'
+          > & {
+            seo: Pick<StorefrontAPI.Seo, 'title' | 'description'>;
+            priceRange: {
+              minVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+              maxVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+            };
+            images: {edges: Array<{node: Pick<StorefrontAPI.Image, 'url'>}>};
+            featuredImage?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Image, 'url'>
+            >;
+          };
+        }>;
+      };
+    }
+  >;
+};
+
 export type SitemapQueryVariables = StorefrontAPI.Exact<{
   urlLimits?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
@@ -1141,6 +1184,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  #graphql\n  fragment ProductFields on Product {\n    id\n    handle\n    createdAt\n    description(truncateAt: 60)\n    title\n    seo {\n      title\n      description\n    }\n    tags\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first: 10) {\n      edges {\n        node {\n          url\n        }\n      }\n    }\n    featuredImage {\n      url\n    }\n  }\n\n  query Catalog(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductFields\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n': {
     return: CatalogQuery;
     variables: CatalogQueryVariables;
+  };
+  '#graphql\n  #graphql\n  fragment ProductFields on Product {\n    id\n    handle\n    createdAt\n    description(truncateAt: 60)\n    title\n    seo {\n      title\n      description\n    }\n    tags\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first: 10) {\n      edges {\n        node {\n          url\n        }\n      }\n    }\n    featuredImage {\n      url\n    }\n  }\n\n  query collections {\n    collection(id: "gid://shopify/Collection/422532579560") {\n      description(truncateAt: 10)\n      id\n      handle\n      title\n      trackingParameters\n      updatedAt\n      products(first: 10) {\n        edges {\n          node {\n            ...ProductFields\n          }\n        }\n      }\n    }\n  }\n': {
+    return: CollectionsQuery;
+    variables: CollectionsQueryVariables;
   };
   '#graphql\n  query Sitemap($urlLimits: Int, $language: LanguageCode)\n  @inContext(language: $language) {\n    products(\n      first: $urlLimits\n      query: "published_status:\'online_store:visible\'"\n    ) {\n      nodes {\n        updatedAt\n        handle\n        onlineStoreUrl\n        title\n        featuredImage {\n          url\n          altText\n        }\n      }\n    }\n    collections(\n      first: $urlLimits\n      query: "published_status:\'online_store:visible\'"\n    ) {\n      nodes {\n        updatedAt\n        handle\n        onlineStoreUrl\n      }\n    }\n    pages(first: $urlLimits, query: "published_status:\'published\'") {\n      nodes {\n        updatedAt\n        handle\n        onlineStoreUrl\n      }\n    }\n  }\n': {
     return: SitemapQuery;
