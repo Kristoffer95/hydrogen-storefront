@@ -5,7 +5,6 @@
 
 @import 'tailwindcss';
 
-
 /* @theme {
   --color-coffee-50: #f3f1ed;
   --color-coffee-100: #e5ded0;
@@ -19,9 +18,7 @@
   --color-coffee-900: #0f0d0b;
 } */
 
-
 @theme {
-  
   /* --container-padding: 1rem;
   --container-sm: 100%;
   --container-md: 720px;
@@ -33,7 +30,7 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1200px;
   --breakpoint-2xl: 1440px;
-  
+
   /* colors */
   --color-coffee-dark: #0d1110;
   --color-coffee-dark-brown: #43241a;
@@ -41,7 +38,6 @@
   --color-coffee-taupe: #93806e;
   --color-coffee-light: #d0cec1;
 }
-
 
 .container {
   @apply w-screen px-[1rem] 
@@ -51,10 +47,15 @@
   xl:max-w-[calc(var(--breakpoint-xl)_-_2rem)] 
   2xl:max-w-[calc(var(--breakpoint-2xl)_-_2rem)]  
   xl:px-[2rem]
-  mx-auto; 
+  mx-auto;
 }
 
 .btn {
   @apply px-36 py-3 bg-coffee-brown hover:bg-coffee-dark !text-white font-thin
   tracking-widest capitalize rounded-sm transition-all duration-300;
+}
+
+/* manual safelisting as tailwind-v4 alpha does not support safelist atm */
+.text-coffee-light {
+  @apply text-coffee-light;
 }

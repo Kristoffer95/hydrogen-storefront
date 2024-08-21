@@ -225,3 +225,83 @@ export const FOOTER_QUERY = `#graphql
   }
   ${MENU_FRAGMENT}
 ` as const;
+
+export const PRODUCT_FIELDS_FRAGMENT = `#graphql
+  fragment ProductFields on Product {
+    id
+    handle
+    createdAt
+    description(truncateAt: 60)
+    title
+    seo {
+      title
+      description
+    }
+    tags
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    images(first: 10) {
+      edges {
+        node {
+          url
+        }
+      }
+    }
+    featuredImage {
+      url
+    }
+  }
+`;
+
+export const CATALOG_QUERY = `#graphql
+  ${PRODUCT_FIELDS_FRAGMENT}
+  query Catalog(
+    $country: CountryCode
+    $language: LanguageCode
+    $first: Int
+    $last: Int
+    $startCursor: String
+    $endCursor: String
+  ) @inContext(country: $country, language: $language) {
+    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+      nodes {
+        ...ProductFields
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+` as const;
+
+export const FEATURED_PRODUCTS_QUERY = `#graphql
+  ${PRODUCT_FIELDS_FRAGMENT}
+  query collections {
+    collection(id: "gid://shopify/Collection/422532579560") {
+      description(truncateAt: 10)
+      id
+      handle
+      title
+      trackingParameters
+      updatedAt
+      products(first: 10) {
+        edges {
+          node {
+            ...ProductFields
+          }
+        }
+      }
+    }
+  }
+` as const;

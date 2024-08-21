@@ -16,11 +16,14 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {
+  FEATURED_PRODUCTS_QUERY,
+  FOOTER_QUERY,
+  HEADER_QUERY,
+} from '~/lib/fragments';
 import {loadQuery} from 'sanity/loader.server';
 import {NAVIGATION_QUERY} from 'sanity/queries';
 import type {Navigation, NAVIGATION_QUERYResult} from 'sanity/types';
-import {FEATURED_PRODUCTS_QUERY} from './graphql/products/Products';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 
 export type RootLoader = typeof loader;
@@ -93,17 +96,6 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
 
   const navigation: NAVIGATION_QUERYResult = await loadQuery(NAVIGATION_QUERY);
 
-  // const [header, featuredProducts] = await Promise.all([
-  //   storefront.query(HEADER_QUERY, {
-  //     cache: storefront.CacheLong(),
-  //     variables: {
-  //       headerMenuHandle: 'main-menu', // Adjust to your header menu handle
-  //     },
-  //   }),
-  //   // Add other queries here, so that they are loaded in parallel
-  //   storefront.query(FEATURED_PRODUCTS_QUERY),
-  // ]);
-
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
@@ -112,7 +104,6 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
       },
     }),
     // Add other queries here, so that they are loaded in parallel
-    // storefront.query(FEATURED_PRODUCTS_QUERY),
   ]);
 
   return {

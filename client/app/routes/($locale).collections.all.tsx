@@ -1,11 +1,9 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
-import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductCard} from '~/components/ProductCards';
-import type {CatalogQuery} from 'storefrontapi.generated';
-import {PRODUCT_FRAGMENT} from '~/graphql/products/Products';
+import {CATALOG_QUERY} from '~/lib/fragments';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -31,13 +29,16 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     pageBy: 4,
   });
 
-  const [{products}] = await Promise.all([
-    storefront.query<CatalogQuery>(CATALOG_QUERY, {
+  const [catalog] = await Promise.all([
+    storefront.query(CATALOG_QUERY, {
+      cache: storefront.CacheLong(),
       variables: {...paginationVariables},
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return {products};
+  return {
+    products: catalog.products,
+  };
 }
 
 /**
@@ -69,28 +70,3 @@ export default function Collection() {
     </div>
   );
 }
-
-// NOTE: https://shopify.dev/docs/api/storefront/2024-01/objects/product
-const CATALOG_QUERY = `#graphql
-  ${PRODUCT_FRAGMENT}
-  query Catalog(
-    $country: CountryCode
-    $language: LanguageCode
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
-  ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
-      nodes {
-        ...ProductFields
-      }
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-` as const;
