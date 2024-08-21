@@ -1,9 +1,10 @@
+// fragments
 export const PRODUCT_FRAGMENT = `#graphql
   fragment ProductFields on Product {
     id
     handle
     createdAt
-    description(truncateAt: 10)
+    description(truncateAt: 60)
     title
     seo {
       title
@@ -33,18 +34,20 @@ export const PRODUCT_FRAGMENT = `#graphql
   }
 ` as const;
 
-export const PRODUCTS_QUERY = `#graphql
-  ${PRODUCT_FRAGMENT}
-  query products {
-    products(first: 10) {
-      edges {
-        node {
-          ...ProductFields
-        }
-      }
-    }
-  }
-` as const;
+// queries
+
+// export const PRODUCTS_QUERY = `#graphql
+//   ${PRODUCT_FRAGMENT}
+//   query products {
+//     products(first: 10) {
+//       edges {
+//         node {
+//           ...ProductFields
+//         }
+//       }
+//     }
+//   }
+// ` as const;
 
 export const FEATURED_PRODUCTS_QUERY = `#graphql
   ${PRODUCT_FRAGMENT}

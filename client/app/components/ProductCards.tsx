@@ -6,14 +6,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-// import 'swiper/css/scrollbar';
 import {NavLink} from '@remix-run/react';
-import type {
-  Collection,
-  ProductEdge,
-  // ProductEdge,
-  QueryRootCollectionsArgs,
-} from '@shopify/hydrogen/storefront-api-types';
 
 import type {
   FeaturedProductsQuery,
@@ -65,9 +58,11 @@ export const ProductCard = ({product}: {product: ProductFieldsFragment}) => {
     <div className="group max-w-[500px]">
       <div className="relative overflow-hidden">
         <img
-          className="group-hover:scale-125 transition-all duration-[350ms] delay-100 grayscale-50 group-hover:grayscale-0"
+          className="group-hover:scale-125 transition-all duration-[350ms] delay-100
+          grayscale-50 group-hover:grayscale-0 aspect-[3/4] object-cover"
           src={product?.featuredImage?.url}
           alt={product?.title}
+          loading="lazy"
         />
 
         <NavLink
